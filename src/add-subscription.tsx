@@ -56,7 +56,7 @@ export default function Command() {
       // The data will automatically be rolled back to its previous value.
       toast.style = Toast.Style.Failure;
       toast.title = `Could not add ${subscription.service}`;
-      toast.message = err?.message;
+      toast.message = err?.toString();
     }
   }
 
