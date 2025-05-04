@@ -1,12 +1,4 @@
-import {
-  Action,
-  ActionPanel,
-  getPreferenceValues,
-  Icon,
-  List,
-  showToast,
-  Toast,
-} from "@raycast/api";
+import { Action, ActionPanel, getPreferenceValues, Icon, List, showToast, Toast } from "@raycast/api";
 
 import { fetchSubscriptions } from "./state";
 import CreateSubscriptionAction from "./add-subscription";
@@ -28,23 +20,20 @@ export default function Command() {
     });
 
     try {
-      data?.[0].data.splice(index, 1);
       await mutate(
-        fetch(
-          "https://nzyzephaenhlxoohrphc.supabase.co/rest/v1/rpc/raycast_update_data",
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              apikey: supabaseApiKey,
-            },
-            body: JSON.stringify({
-              raycast_uuid: subwatchApiKey,
-              newdata: data?.[0].data,
-            }),
+        fetch("https://nzyzephaenhlxoohrphc.supabase.co/rest/v1/rpc/raycast_update_data", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            apikey: supabaseApiKey,
           },
-        ),
+          body: JSON.stringify({
+            raycast_uuid: subwatchApiKey,
+            newdata: data?.[0].data,
+          }),
+        })
       );
+      data?.[0].data.splice(index, 1);
       showToast({
         style: Toast.Style.Success,
         title: "Done!",
@@ -79,15 +68,8 @@ export default function Command() {
           actions={
             <ActionPanel>
               <ActionPanel.Section>
-                <Action.Push
-                  icon={Icon.Pencil}
-                  title="Create Subscription"
-                  shortcut={{ modifiers: ["cmd"], key: "n" }}
-                  target={<CreateSubscriptionAction />}
-                />
-                <DeleteSubscriptionAction
-                  onDelete={() => handleDelete(index)}
-                />
+                <Action.Push icon={Icon.Pencil} title="Create Subscription" shortcut={{ modifiers: ["cmd"], key: "n" }} target={<CreateSubscriptionAction />} />
+                <DeleteSubscriptionAction onDelete={() => handleDelete(index)} />
               </ActionPanel.Section>
             </ActionPanel>
           }
@@ -96,32 +78,14 @@ export default function Command() {
               markdown={`![Logo](https://img.logo.dev/${item.domain || `${item.name}.com`}?token=pk_JrIah0kcTFeKu4Xk9or1xw)`}
               metadata={
                 <List.Item.Detail.Metadata>
-                  <List.Item.Detail.Metadata.Link
-                    title="Domain"
-                    target={`https://${item.domain}`}
-                    text={item.domain}
-                  />
-                  <List.Item.Detail.Metadata.Label
-                    title="Interval"
-                    text={item.billing[0].interval}
-                  />
-                  <List.Item.Detail.Metadata.Label
-                    title="Pricing"
-                    text={String(item.billing[0].price)}
-                  />
+                  <List.Item.Detail.Metadata.Link title="Domain" target={`https://${item.domain}`} text={item.domain} />
+                  <List.Item.Detail.Metadata.Label title="Interval" text={item.billing[0]?.interval} />
+                  <List.Item.Detail.Metadata.Label title="Pricing" text={String(item.billing[0]?.price)} />
                   <List.Item.Detail.Metadata.Separator />
-                  <List.Item.Detail.Metadata.Label
-                    title="Start date"
-                    text={item.billing[0].start_date}
-                  />
+                  <List.Item.Detail.Metadata.Label title="Start date" text={item.billing[0]?.start_date} />
                   <List.Item.Detail.Metadata.Label
                     title="End date"
-                    text={
-                      item.billing[0].end_date &&
-                      item.billing[0].end_date != "null"
-                        ? item.billing[0].end_date
-                        : ""
-                    }
+                    text={item.billing[0].end_date && item.billing[0].end_date !== "null" ? item.billing[0].end_date : ""}
                   />
                 </List.Item.Detail.Metadata>
               }
@@ -134,12 +98,5 @@ export default function Command() {
 }
 
 function DeleteSubscriptionAction(props: { onDelete: () => void }) {
-  return (
-    <Action
-      icon={Icon.Trash}
-      title="Delete Subscription"
-      shortcut={{ modifiers: ["ctrl"], key: "x" }}
-      onAction={props.onDelete}
-    />
-  );
+  return <Action icon={Icon.Trash} title="Delete Subscription" shortcut={{ modifiers: ["ctrl"], key: "x" }} onAction={props.onDelete} />;
 }
