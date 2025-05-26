@@ -1,5 +1,8 @@
-# ubwatch Changelog
+# Subwatch Changelog
 
-## ✨ [Initial Version] - 2025-02-02
+## ✨ [Initial Version] - 2025-05-12
 
-Initial version code
+Initial version code. Existing features:
+
+- Add new subscriptions.
+- List and delete existing subscriptions.
