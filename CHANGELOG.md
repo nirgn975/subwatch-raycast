@@ -1,5 +1,12 @@
-# ubwatch Changelog
+# Subwatch Changelog
 
-## ✨ [Initial Version] - 2025-02-02
+## ✨ [v1.1] - 2025-05-27
 
-Initial version code
+- Fixes a bug where getting subscriptions fails when server overload, now I'm catch them.
+
+## ✨ [Initial Version] - 2025-05-12
+
+Initial version code. Existing features:
+
+- Add new subscriptions.
+- List and delete existing subscriptions.
