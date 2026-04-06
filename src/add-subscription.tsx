@@ -18,7 +18,7 @@ export default function Command() {
       title: `Adding ${subscription.name}`,
     });
 
-    const formatedSubscription: Record<string, any> = subscription;
+    const formatedSubscription: Record<string, string | number | Date | null> = subscription;
 
     if (subscription.start_date) {
       formatedSubscription.start_date = subscription.start_date.toISOString().split("T")[0];
